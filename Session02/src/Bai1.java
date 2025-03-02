@@ -1,21 +1,18 @@
 public class Bai1 {
     public static void main(String[] args) {
         int a;
-        double b;
-        char c;
-        String d;
+        double db;
+        char ch;
+        String str;
 
         a = 20;
-        b = 90.5;
-        c = 'a';
-        d = "Nguyễn Thế Minh";
+        db = 90.53;
+        ch = 'a';
+        str = "Nguyễn Thế Minh";
 
-        int sum = a + a;
-        double acreage = 3.14 * b;
-
-        System.out.printf("Tổng 2 số nguyên: %d\n", sum);
-        System.out.printf("diện tích hình tròn: %f\n", acreage);
-        System.out.printf("Ký tự c: %c\n", c);
-        System.out.printf("Chuỗi d: %s\n", d);
+        System.out.printf("giá trị biến a: %d\n", a);
+        System.out.printf("giá trị biến db: %.2f\n", db);
+        System.out.printf("giá trị biến ch: %c\n", ch);
+        System.out.printf("giá trị biến str: %s\n", str);
     }
 }

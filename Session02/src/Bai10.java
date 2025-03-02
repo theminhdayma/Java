@@ -5,37 +5,26 @@ public class Bai10 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        BigInteger num1 = getValidBigInteger(scanner, "Nhập số nguyên lớn thứ nhất: ");
-        BigInteger num2 = getValidBigInteger(scanner, "Nhập số nguyên lớn thứ hai: ");
+        System.out.print("Nhập số nguyên lớn a: ");
+        BigInteger a = new BigInteger(scanner.nextLine());
 
-        System.out.println("Tổng: " + num1.add(num2));
-        System.out.println("Hiệu: " + num1.subtract(num2));
-        System.out.println("Tích: " + num1.multiply(num2));
+        System.out.print("Nhập số nguyên lớn b: ");
+        BigInteger b = new BigInteger(scanner.nextLine());
 
-        BigInteger exponent = getValidBigInteger(scanner, "Nhập số mũ (nguyên dương): ");
-        if (exponent.signum() >= 0) {
-            System.out.println("Lũy thừa: " + num1.pow(exponent.intValue()));
-        } else {
-            System.out.println("Số mũ không hợp lệ.");
-        }
+        BigInteger sum = a.add(b);
+        BigInteger difference = a.subtract(b);
+        BigInteger product = a.multiply(b);
+        BigInteger quotient = a.divide(b);
+        BigInteger remainder = a.mod(b);
+        BigInteger power = a.pow(10);
 
-        if (num2.signum() != 0) {
-            System.out.println("Thương: " + num1.divide(num2));
-            System.out.println("Modulo: " + num1.mod(num2));
-        } else {
-            System.out.println("Không thể chia cho 0.");
-        }
-    }
+        System.out.println("a + b = " + sum);
+        System.out.println("a - b = " + difference);
+        System.out.println("a * b = " + product);
+        System.out.println("a / b = " + quotient);
+        System.out.println("a % b = " + remainder);
+        System.out.println("a^10 = " + power);
 
-    private static BigInteger getValidBigInteger(Scanner scanner, String message) {
-        while (true) {
-            System.out.print(message);
-            String input = scanner.nextLine();
-            try {
-                return new BigInteger(input);
-            } catch (NumberFormatException e) {
-                System.err.println("Dữ liệu không hợp lệ. Vui lòng nhập lại một số nguyên lớn hợp lệ.");
-            }
-        }
+        scanner.close();
     }
 }

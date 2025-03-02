@@ -14,19 +14,12 @@ public class Bai6 {
 
         sc.close();
 
-        double resultavg = (math + physics + chemistry) / 3;
-        String result;
+        double avg = (math + physics + chemistry) / 3;
+        String result = (avg >= 5.0) ? "Lên lớp" : "Học lại";
 
-        if (resultavg >8.0) {
-            result = "giỏi";
-        } else if (resultavg > 6.5) {
-            result = "khá";
-        } else if (resultavg > 5.0) {
-            result = "Trung bình";
-        } else {
-            result = "Yếu";
-        }
-
-        System.out.printf("Tên học sinh: %s\n Điểm trung bình: %f\n Xếp loại: %s\n", name, resultavg, result);
+        System.out.printf("Tên học sinh: %s\n", name);
+        System.out.printf("Điểm Toán: %.2f | Điểm Lý: %.2f | Điểm Hóa: %.2f\n", math, physics, chemistry);
+        System.out.printf("Điểm trung bình: %.2f\n", avg);
+        System.out.println("Đánh giá: " + result);
     }
 }

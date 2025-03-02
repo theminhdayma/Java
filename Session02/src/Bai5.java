@@ -5,10 +5,10 @@ public class Bai5 {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Nhập chiều dài : ");
-        int a = sc.nextInt();
+        double a = sc.nextInt();
 
         System.out.print("Nhập chiều rộng : ");
-        int b = sc.nextInt();
+        double b = sc.nextInt();
 
         sc.close();
 
