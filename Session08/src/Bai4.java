@@ -3,16 +3,16 @@ public class Bai4 {
         String chuoiBanDau = "abcdefghij".repeat(100000);
 
         System.out.println("🔹 Kiểm tra với StringBuilder...");
-        long thoiGianBatDau = System.nanoTime();
+        long timeStart = System.nanoTime();
         kiemTraStringBuilder(chuoiBanDau);
-        long thoiGianKetThuc = System.nanoTime();
-        System.out.println("⏳ Thời gian thực thi của StringBuilder: " + (thoiGianKetThuc - thoiGianBatDau) / 1_000_000 + " ms\n");
+        long timeEnd = System.nanoTime();
+        System.out.println("⏳ Thời gian thực thi của StringBuilder: " + (timeEnd - timeStart) / 1_000_000 + " ms\n");
 
         System.out.println("🔹 Kiểm tra với StringBuffer...");
-        thoiGianBatDau = System.nanoTime();
+        timeStart = System.nanoTime();
         kiemTraStringBuffer(chuoiBanDau);
-        thoiGianKetThuc = System.nanoTime();
-        System.out.println("⏳ Thời gian thực thi của StringBuffer: " + (thoiGianKetThuc - thoiGianBatDau) / 1_000_000 + " ms");
+        timeEnd = System.nanoTime();
+        System.out.println("⏳ Thời gian thực thi của StringBuffer: " + (timeEnd - timeStart) / 1_000_000 + " ms");
     }
 
     private static void kiemTraStringBuilder(String str) {
