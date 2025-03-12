@@ -115,45 +115,93 @@ public class Book {
     }
 
     public boolean inputData(Scanner scanner) {
-        System.out.print("Nhập mã sách (Bxxxx): ");
-        String bookId = scanner.nextLine();
-        setBookId(bookId);
-        if (!bookId.equals(this.bookId)) return false;
+        while (true) {
+            System.out.print("Nhập mã sách (Bxxxx): ");
+            String inputBookId = scanner.nextLine();
+            setBookId(inputBookId);
+            if (this.bookId != null && this.bookId.equals(inputBookId)) {
+                break;
+            }
+            System.out.println("Mã sách không hợp lệ. Vui lòng nhập lại!");
+        }
 
-        System.out.print("Nhập tên sách: ");
-        String bookName = scanner.nextLine();
-        setBookName(bookName);
-        if (!bookName.equals(this.bookName)) return false;
+        while (true) {
+            System.out.print("Nhập tên sách: ");
+            String inputBookName = scanner.nextLine();
+            setBookName(inputBookName);
+            if (this.bookName != null && this.bookName.equals(inputBookName)) {
+                break;
+            }
+            System.out.println("Tên sách không hợp lệ. Vui lòng nhập lại!");
+        }
 
-        System.out.print("Nhập giá nhập: ");
-        double importPrice = scanner.nextDouble();
-        setImportPrice(importPrice);
-        if (this.importPrice != importPrice) return false;
+        while (true) {
+            System.out.print("Nhập giá nhập: ");
+            if (scanner.hasNextDouble()) {
+                double inputImportPrice = scanner.nextDouble();
+                setImportPrice(inputImportPrice);
+                if (this.importPrice == inputImportPrice) {
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Giá nhập không hợp lệ. Vui lòng nhập lại!");
+        }
 
-        System.out.print("Nhập giá bán: ");
-        double exportPrice = scanner.nextDouble();
-        setExportPrice(exportPrice);
-        if (this.exportPrice != exportPrice) return false;
-        scanner.nextLine(); // Consume newline
+        while (true) {
+            System.out.print("Nhập giá bán: ");
+            if (scanner.hasNextDouble()) {
+                double inputExportPrice = scanner.nextDouble();
+                setExportPrice(inputExportPrice);
+                if (this.exportPrice == inputExportPrice) {
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Giá bán không hợp lệ. Vui lòng nhập lại!");
+        }
+        scanner.nextLine(); // Xóa buffer
 
-        System.out.print("Nhập tiêu đề: ");
-        String title = scanner.nextLine();
-        setTitle(title);
-        if (!title.equals(this.title)) return false;
+        while (true) {
+            System.out.print("Nhập tiêu đề: ");
+            String inputTitle = scanner.nextLine();
+            setTitle(inputTitle);
+            if (this.title != null && this.title.equals(inputTitle)) {
+                break;
+            }
+            System.out.println("Tiêu đề không hợp lệ. Vui lòng nhập lại!");
+        }
 
-        System.out.print("Nhập tác giả: ");
-        String author = scanner.nextLine();
-        setAuthor(author);
-        if (!author.equals(this.author)) return false;
+        while (true) {
+            System.out.print("Nhập tác giả: ");
+            String inputAuthor = scanner.nextLine();
+            setAuthor(inputAuthor);
+            if (this.author != null && this.author.equals(inputAuthor)) {
+                break;
+            }
+            System.out.println("Tác giả không hợp lệ. Vui lòng nhập lại!");
+        }
 
-        System.out.print("Nhập năm xuất bản: ");
-        int year = scanner.nextInt();
-        setYear(year);
-        if (this.year != year) return false;
+        while (true) {
+            System.out.print("Nhập năm xuất bản: ");
+            if (scanner.hasNextInt()) {
+                int inputYear = scanner.nextInt();
+                setYear(inputYear);
+                if (this.year == inputYear) {
+                    break;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Năm xuất bản không hợp lệ. Vui lòng nhập lại!");
+        }
 
         calInterest();
-        return true; // Nếu qua tất cả kiểm tra, trả về true
+        return true;
     }
+
 
     // Phương thức hiển thị thông tin sách
     public void displayData() {

@@ -78,12 +78,9 @@ public class BookManagement {
             return;
         }
         Book book = new Book();
-        if (book.inputData(scanner)) {
-            bookList[bookCount++] = book;
-            System.out.println("Thêm sách thành công!");
-        } else {
-            System.out.println("Thêm sách không thành công, dữ liệu không hợp lệ.");
-        }
+        book.inputData(scanner);
+        bookList[bookCount++] = book;
+        System.out.println("Thêm sách thành công!");
     }
 
     private void calculateProfit() {
