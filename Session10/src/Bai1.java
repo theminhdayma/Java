@@ -20,11 +20,6 @@
         - Setter: Thiết lập giá trị mới cho thuộc tính, có thể bổ sung kiểm tra hợp lệ trước khi gán.
  *
  *  3. Ví dụ về cách sử dụng tính đóng gói trong một lớp có thuộc tính name, age
- *
- *
- *
- *
- *
  * */
  class Person {
     private String name;
@@ -63,3 +58,12 @@ public class Bai1 {
 
     }
 }
+
+ /* 4. Lợi ích của việc sử dụng tính đóng gói trong việc bảo vệ dữ liệu và kiểm soát quyền truy cập
+
+  - Bảo vệ dữ liệu: Ngăn chặn truy cập trực tiếp từ bên ngoài, đảm bảo dữ liệu không bị thay đổi bất hợp pháp.
+  - Kiểm soát quyền truy cập: Chỉ cho phép thay đổi dữ liệu theo cách mà lập trình viên quy định (ví dụ: kiểm tra hợp lệ trước khi gán giá trị).
+  - Dễ bảo trì: Khi thay đổi cách xử lý dữ liệu bên trong lớp, không cần chỉnh sửa code bên ngoài đang sử dụng lớp đó.
+  - Tăng tính linh hoạt: Có thể thêm logic kiểm tra hợp lệ trước khi thay đổi dữ liệu.
+  - Tạo mã nguồn sạch và dễ hiểu hơn: Tách biệt rõ ràng giữa dữ liệu và cách truy cập vào dữ liệu.
+*/
