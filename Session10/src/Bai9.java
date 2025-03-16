@@ -3,11 +3,7 @@ class Employee {
     protected String id;
     protected double salary;
 
-    public Employee() {
-        this.name = "Unknown";
-        this.id = "000";
-        this.salary = 0.0;
-    }
+    public Employee() {}
 
     public Employee(String name, String id, double salary) {
         this.name = name;
@@ -37,10 +33,7 @@ class Employee {
 class Manager extends Employee {
     private double bonus;
 
-    public Manager() {
-        super();
-        this.bonus = 0.0;
-    }
+    public Manager() {}
 
     public Manager(String name, String id, double salary, double bonus) {
         super(name, id, salary);
@@ -61,10 +54,7 @@ class Manager extends Employee {
 class Developer extends Employee {
     private String programmingLanguage;
 
-    public Developer() {
-        super();
-        this.programmingLanguage = "Unknown";
-    }
+    public Developer() {}
 
     public Developer(String name, String id, double salary, String programmingLanguage) {
         super(name, id, salary);
