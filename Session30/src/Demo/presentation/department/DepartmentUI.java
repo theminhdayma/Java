@@ -1,7 +1,6 @@
 package Demo.presentation.department;
 
 import Demo.business.model.Department;
-import Demo.business.model.employee.Employee;
 import Demo.business.service.department.DepartmentService;
 import Demo.business.service.department.DepartmentServiceImp;
 import Demo.presentation.employee.EmployeeUI;
@@ -50,49 +49,58 @@ public class DepartmentUI {
     }
 
     public static void pagination(Scanner sc) {
-        List<Department> departmentList = departmentService.findAll();
+        List<Department> allDepartments = departmentService.findAll();
 
-        int totalPages = (int) Math.ceil((double) departmentList.size() / ITEM_PER_PAGE);
-
-        if (departmentList.isEmpty()) {
+        if (allDepartments.isEmpty()) {
             System.err.println("Không có phòng ban nào trong danh sách.");
             return;
         }
 
-        do {
+        int totalPages = (int) Math.ceil((double) allDepartments.size() / ITEM_PER_PAGE);
+
+        while (true) {
             System.out.println("--------- Danh sách trang ---------");
             for (int i = 1; i <= totalPages; i++) {
                 System.out.printf("Trang %d\n", i);
             }
-            System.out.printf("Lựa chọn của bạn (hoặc ấn 0 để thoát): ");
+            System.out.print("Lựa chọn của bạn (hoặc ấn 0 để thoát): ");
 
-            int currentPage = Integer.parseInt(sc.nextLine());
-
-            if (currentPage == 0) {
-                break;
-            }
-
-            if (currentPage < 1 || currentPage > totalPages) {
-                System.err.println("Số trang không hợp lệ. Vui lòng nhập lại");
+            int currentPage;
+            try {
+                currentPage = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Vui lòng nhập số hợp lệ.");
                 continue;
             }
 
-            List<Department> paginationList = departmentService.paginateDepartment(currentPage);
+            if (currentPage == 0) break;
 
-            System.out.println("Trang " + currentPage);
-            paginationList.forEach(department -> {
-                department.displayData();
+            if (currentPage < 1 || currentPage > totalPages) {
+                System.err.println("Số trang không hợp lệ. Vui lòng nhập lại.");
+                continue;
+            }
+
+            List<Department> pageDepartments = departmentService.paginateDepartment(currentPage);
+            System.out.println("--------- Trang " + currentPage + " ---------");
+            pageDepartments.forEach(dept -> {
+                dept.displayData();
                 System.out.println("------------------------------");
             });
-        } while (true);
+        }
     }
 
     public static void addDepartment(Scanner sc) {
-        System.out.println("Nhập số luợng phòng ban cần thêm:");
-        int size = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhập số lượng phòng ban cần thêm: ");
+        int count;
+        try {
+            count = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("Số lượng không hợp lệ.");
+            return;
+        }
 
-        for (int i = 0; i < size; i++) {
-            System.out.println("Nhập thông tin phòng ban thứ " + (i + 1) + ":");
+        for (int i = 1; i <= count; i++) {
+            System.out.println("Nhập thông tin phòng ban thứ " + i + ":");
             Department department = new Department();
             department.inputData(sc);
             departmentService.save(department);
@@ -101,75 +109,75 @@ public class DepartmentUI {
     }
 
     public static void updateDepartment(Scanner sc) {
-        System.out.println("Nhập id phòng ban cần cập nhật:");
-        int departmentId = Integer.parseInt(sc.nextLine());
-
-        if (departmentService.findDepartmentById(departmentId) != null) {
-            Department department = new Department();
-            department.setDepartment_id(departmentId);
-
-            department.inputData(sc);
-
-            boolean result = departmentService.update(department);
-
-            if (result) {
-                System.out.println("Cập nhật thành công!");
-            } else {
-                System.err.println("Cập nhật thất bại!");
-            }
-        } else {
-            System.err.println("Không tìm thấy phòng ban!");
+        System.out.print("Nhập ID phòng ban cần cập nhật: ");
+        int departmentId;
+        try {
+            departmentId = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("ID không hợp lệ.");
+            return;
         }
+
+        Department existingDepartment = departmentService.findDepartmentById(departmentId);
+        if (existingDepartment == null) {
+            System.err.println("Không tìm thấy phòng ban!");
+            return;
+        }
+
+        Department updatedDepartment = new Department();
+        updatedDepartment.setDepartment_id(departmentId);
+        updatedDepartment.inputData(sc);
+
+        boolean updated = departmentService.update(updatedDepartment);
+        System.out.println(updated ? "Cập nhật thành công!" : "Cập nhật thất bại!");
     }
 
     public static void deleteDepartment(Scanner sc) {
-        System.out.println("Nhập vào id phòng ban cần xóa:");
-        int departmentId = Integer.parseInt(sc.nextLine());
+        System.out.print("Nhập ID phòng ban cần xóa: ");
+        int departmentId;
+        try {
+            departmentId = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            System.err.println("ID không hợp lệ.");
+            return;
+        }
 
-        List<Employee> employees = EmployeeUI.employeeService.findAll();
+        Department existingDepartment = departmentService.findDepartmentById(departmentId);
+        if (existingDepartment == null) {
+            System.err.println("Không tìm thấy phòng ban!");
+            return;
+        }
 
-        List<Employee> filterEmployees = employees.stream()
-                .filter(employee -> employee.getDepartment_id() == departmentId)
-                .toList();
+        boolean hasEmployees = EmployeeUI.employeeService.findAll().stream()
+                .anyMatch(emp -> emp.getDepartment_id() == departmentId);
 
-        if (!filterEmployees.isEmpty()) {
+        if (hasEmployees) {
             System.err.println("Phòng ban có nhân viên. Không thể xóa!");
             return;
         }
 
-        if (departmentService.findDepartmentById(departmentId) != null) {
-            System.out.println("Bạn có chắc chắn muốn xóa không?");
-            String confirm = sc.nextLine();
+        System.out.print("Bạn có chắc chắn muốn xóa không? (y/n): ");
+        String confirm = sc.nextLine().trim().toLowerCase();
 
-            if (confirm.equals("y")) {
-                Department department = new Department();
-                department.setDepartment_id(departmentId);
-                boolean result = departmentService.delete(department);
-
-                if (result) {
-                    System.out.println("Xóa phòng ban thành công!");
-                } else {
-                    System.err.println("Xóa thất bại");
-                }
-            }
-        } else {
-            System.err.println("Không tìm thấy phòng ban!");
+        if (confirm.equals("y")) {
+            boolean deleted = departmentService.delete(existingDepartment);
+            System.out.println(deleted ? "Xóa phòng ban thành công!" : "Xóa thất bại!");
         }
     }
 
     public static void searchDepartmentByName(Scanner sc) {
-        System.out.println("Nhập vào tên phòng ban cần tìm");
-        String departmentName = sc.nextLine();
+        System.out.print("Nhập tên phòng ban cần tìm: ");
+        String name = sc.nextLine().trim();
 
-        if (!departmentService.findDepartmentByName(departmentName).isEmpty()) {
-            List<Department> departmentList = departmentService.findDepartmentByName(departmentName);
-
-            departmentList.forEach(department -> {
-                department.displayData();
-                System.out.println("-------------------------------");
-            });
-        } else {
+        List<Department> matchedDepartments = departmentService.findDepartmentByName(name);
+        if (matchedDepartments.isEmpty()) {
             System.err.println("Không tìm thấy tên phòng ban!");
+            return;
         }
+
+        matchedDepartments.forEach(dept -> {
+            dept.displayData();
+            System.out.println("-------------------------------");
+        });
     }
 }
